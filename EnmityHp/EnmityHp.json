@@ -1,0 +1,7 @@
+﻿{
+  "Name": "EnmityHp",
+  "Author": "Eternita",
+  "Description": "Displays enemies hp in enemy list.",
+  "RepoUrl": "https://github.com/Eternita-S/EnmityHp",
+  "DalamudApiLevel": 4
+}

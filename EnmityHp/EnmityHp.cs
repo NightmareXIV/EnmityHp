@@ -1,5 +1,7 @@
-﻿using Dalamud.Game.Internal;
+﻿using Dalamud.Game;
+using Dalamud.Game.Internal;
 using Dalamud.Interface;
+using Dalamud.Logging;
 using Dalamud.Plugin;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
@@ -16,20 +18,20 @@ namespace EnmityHp
     unsafe class EnmityHp : IDalamudPlugin
     {
         public string Name => "EnmityHp";
-        internal DalamudPluginInterface pi;
         internal List<(float x, float y, string str)> drawList;
 
         public void Dispose()
         {
-            pi.Dispose();
+            Svc.Framework.Update += Tick;
+            Svc.PluginInterface.UiBuilder.Draw += Draw;
         }
 
-        public void Initialize(DalamudPluginInterface pluginInterface)
+        public EnmityHp(DalamudPluginInterface pluginInterface)
         {
-            pi = pluginInterface;
+            pluginInterface.Create<Svc>();
             drawList = new List<(float x, float y, string str)>();
-            pi.Framework.OnUpdateEvent += Tick;
-            pi.UiBuilder.OnBuildUi += Draw;
+            Svc.Framework.Update += Tick;
+            Svc.PluginInterface.UiBuilder.Draw += Draw;
         }
 
         [HandleProcessCorruptedStateExceptions]
@@ -38,7 +40,7 @@ namespace EnmityHp
             drawList.Clear();
             try
             {
-                var enlist = pi.Framework.Gui.GetUiObjectByName("_EnemyList", 1);
+                var enlist = Svc.GameGui.GetAddonByName("_EnemyList", 1);
                 if (enlist != IntPtr.Zero)
                 {
                     var enlistAtk = (AtkUnitBase*)enlist;
@@ -63,7 +65,7 @@ namespace EnmityHp
             }
             catch (Exception e)
             {
-                pi.Framework.Gui.Chat.Print("[EnmityHp] " + e.Message + "\n" + e.StackTrace);
+                PluginLog.Error("[EnmityHp] " + e.Message + "\n" + e.StackTrace);
             }
         }
 
