@@ -9,7 +9,7 @@ Note: this will not always match target bar %. Target bar % always uses rounding
 |99.8%|99%|100%|
 |99.2%|99%|99%|
 
-No configuration or extra precision because I want to keep this as simple as it's ever possible and this plugin has an extremely niche usage anyway. 
+Minimal configuration and no extra precision because I want to keep this as simple as it's ever possible and this plugin has an extremely niche usage anyway. 
 Feel free to create a fork and customize it in any way if you wish.
 
 ## Install
