@@ -60,8 +60,8 @@ namespace EnmityHp
                             var enemyTile = (AtkComponentNode*)enlistAtk->UldManager.NodeList[i];
                             if (enemyTile->AtkResNode.IsVisible)
                             {
-                                if (enemyTile->Component->UldManager.NodeListCount < 9) continue;
-                                var enemyBar = (AtkImageNode*)enemyTile->Component->UldManager.NodeList[8];
+                                if (enemyTile->Component->UldManager.NodeListCount < 11) continue;
+                                var enemyBar = (AtkImageNode*)enemyTile->Component->UldManager.NodeList[10];
                                 drawList.Add((enemyTile->AtkResNode.X * enlistAtk->Scale + baseX - 2f,
                                     enemyTile->AtkResNode.Y * enlistAtk->Scale + enemyTile->AtkResNode.Height * enlistAtk->Scale / 2f + baseY,
                                     (enemyBar->AtkResNode.ScaleX * 100f).ToString("0")+"%"));
