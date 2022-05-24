@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game;
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Internal;
 using Dalamud.Interface;
 using Dalamud.Interface.Internal.Notifications;
@@ -39,11 +40,11 @@ namespace EnmityHp
             Svc.PluginInterface.UiBuilder.OpenConfigUi += delegate { CfgOpen = true; };
         }
 
-        [HandleProcessCorruptedStateExceptions]
         private void Tick(Framework framework)
         {
             drawList.Clear();
-            if (!Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat]) return;
+            if (!Svc.Condition[ConditionFlag.InCombat] || Svc.ClientState.IsPvP) return;
+
             try
             {
                 var enlist = Svc.GameGui.GetAddonByName("_EnemyList", 1);
