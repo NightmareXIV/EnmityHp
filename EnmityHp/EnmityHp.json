@@ -1,6 +1,6 @@
 ﻿{
   "Author": "Eternita",
-  "Name": "EnmityHp",
+  "Name": "EnemyListHP",
   "InternalName": "EnmityHp",
   "AssemblyVersion": "9.0.0.0",
   "Description": "Displays enemies hp in enemy list. Just does that, nothing else. ",
