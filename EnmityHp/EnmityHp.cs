@@ -19,7 +19,7 @@ namespace EnmityHp
 {
     unsafe class EnmityHp : IDalamudPlugin
     {
-        public string Name => "EnmityHp";
+        public string Name => "EnemyListHP";
         private Config Cfg;
         bool CfgOpen = false;
 

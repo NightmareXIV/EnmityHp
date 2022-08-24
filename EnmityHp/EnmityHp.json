@@ -2,11 +2,9 @@
   "Author": "Eternita",
   "Name": "EnemyListHP",
   "InternalName": "EnmityHp",
-  "AssemblyVersion": "9.0.0.0",
   "Description": "Displays enemies hp in enemy list. Just does that, nothing else. ",
   "Punchline": "Displays enemies hp in enemy list.",
   "ApplicableVersion": "any",
-  "RepoUrl": "https://github.com/Eternita-S/EnmityHp",
-  "DalamudApiLevel": 6,
+  "RepoUrl": "https://github.com/NightmareXIV/EnmityHp",
   "LoadPriority": 0
 }
