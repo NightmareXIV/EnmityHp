@@ -1,4 +1,4 @@
-# EnmityHp
+# EnemyListHP
 Adds little display to enemy list that shows enemy hp. Like this:
 
 ![](https://i.imgur.com/OHmeHhn.png)
@@ -13,8 +13,4 @@ Minimal configuration and no extra precision because I want to keep this as simp
 Feel free to create a fork and customize it in any way if you wish.
 
 ## Install
-Dalamud repository:
-
-`https://raw.githubusercontent.com/Eternita-S/MyDalamudPlugins/main/pluginmaster.json`
-
-Detailed instructions available here: https://github.com/Eternita-S/MyDalamudPlugins
+Type `/xlplugins`, find `EnemyListHP` in plugin list and install it.
