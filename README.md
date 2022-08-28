@@ -3,8 +3,8 @@ Adds little display to enemy list that shows enemy hp. Like this:
 
 ![](https://i.imgur.com/OHmeHhn.png)
 
-Note: this will not always match target bar %. Target bar % always uses rounding down, while enmity list uses normal rounding.
-|Real %|Target bar display %|Enmity display %|
+Note: this will not always match target bar %. Target bar % always uses rounding down, while enemy list uses normal rounding.
+|Real %|Target bar display %|Enemy list display %|
 |---|---|---|
 |99.8%|99%|100%|
 |99.2%|99%|99%|
