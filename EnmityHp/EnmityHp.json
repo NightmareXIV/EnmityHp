@@ -1,6 +1,6 @@
 ﻿{
   "Author": "NightmareXIV",
-  "Name": "EnemyListHP",
+  "Name": "EnemyListHP (former EnmityHp)",
   "InternalName": "EnmityHp",
   "Description": "Displays enemies hp in enemy list. Just does that, nothing else. ",
   "Punchline": "Displays enemies hp in enemy list.",
