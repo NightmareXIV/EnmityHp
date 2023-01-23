@@ -2,16 +2,20 @@
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Internal;
 using Dalamud.Interface;
+using Dalamud.Interface.Colors;
+using Dalamud.Interface.GameFonts;
 using Dalamud.Interface.Internal.Notifications;
 using Dalamud.Logging;
 using Dalamud.Plugin;
 using ECommons.ImGuiMethods;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using FFXIVClientStructs.Havok;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,20 +25,30 @@ namespace EnmityHp
     unsafe class EnmityHp : IDalamudPlugin
     {
         public string Name => "EnemyListHP";
-        private Config Cfg;
+        internal Config Cfg;
+        internal static EnmityHp P;
         bool CfgOpen = false;
 
         public void Dispose()
         {
             Svc.PluginInterface.UiBuilder.Draw -= Draw;
+            P = null;
         }
 
         public EnmityHp(DalamudPluginInterface pluginInterface)
         {
+            P = this;
             pluginInterface.Create<Svc>();
             Svc.PluginInterface.UiBuilder.Draw += Draw;
             Cfg = Svc.PluginInterface.GetPluginConfig() as Config ?? new Config();
             Svc.PluginInterface.UiBuilder.OpenConfigUi += delegate { CfgOpen = true; };
+            Svc.Framework.RunOnFrameworkThread(() =>
+            {
+                if (Cfg.Font != null)
+                {
+                    _ = Svc.PluginInterface.UiBuilder.GetGameFontHandle(new GameFontStyle(Cfg.Font.Value));
+                }
+            });
         }
         private void Draw()
         {
@@ -50,10 +64,40 @@ namespace EnmityHp
                     ImGui.SetNextItemWidth(100f);
                     ImGui.DragFloat("Scale", ref Cfg.Size, 0.001f);
 
-                    Util.ImGuiLineCentered("donate", delegate
+                    Util.NullColorEdit(ref Cfg.Color, "Customize text color", ImGuiCol.Text);
+                    Util.NullColorEdit(ref Cfg.BGColor, "Customize background color", ImGuiCol.WindowBg);
+
+                    var useFont = Cfg.Font != null;
+                    if(ImGui.Checkbox($"Use specific font", ref useFont))
                     {
-                        KoFiButton.DrawButton();
-                    });
+                        if (useFont)
+                        {
+                            Cfg.Font = GameFontFamilyAndSize.Axis18;
+                        }
+                        else
+                        {
+                            Cfg.Font = null;
+                        }
+                    }
+                    if(Cfg.Font != null)
+                    {
+                        var temp = Cfg.Font.Value;
+                        ImGui.SetNextItemWidth(200f);
+                        if(Util.EnumCombo("Select font", ref temp, (item) => item != GameFontFamilyAndSize.Undefined))
+                        {
+                            Cfg.Font = temp;
+                        }
+                        if (ImGui.CollapsingHeader("Preview font"))
+                        {
+                            ImGui.PushFont(Svc.PluginInterface.UiBuilder.GetGameFontHandle(new GameFontStyle(Cfg.Font.Value)).ImFont);
+                            ImGui.SetWindowFontScale(Cfg.Size);
+                            ImGui.TextUnformatted("Preview 100% 50% 1%");
+                            ImGui.SetWindowFontScale(1f);
+                            ImGui.PopFont();
+                        }
+                    }
+
+                    Util.ImGuiLineCentered("donate", KoFiButton.DrawButton);
                 }
                 ImGui.End();
                 if (!CfgOpen)
@@ -100,6 +144,14 @@ namespace EnmityHp
 
         void DrawEnemyHp(float x, float y, string str)
         {
+            if (Cfg.BGColor != null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.WindowBg, Cfg.BGColor.Value);
+            }
+            if (Cfg.Font != null)
+            {
+                ImGui.PushFont(Svc.PluginInterface.UiBuilder.GetGameFontHandle(new GameFontStyle(Cfg.Font.Value)).ImFont);
+            }
             ImGuiHelpers.ForceNextWindowMainViewport();
             var textSize = ImGui.CalcTextSize(str) * Cfg.Size;
             ImGuiHelpers.SetNextWindowPosRelativeMainViewport(new Vector2(x - (Cfg.IsLeftAligned ? 0 : textSize.X) + Cfg.OffsetX, y - textSize.Y / 2f + Cfg.OffsetY));
@@ -109,8 +161,24 @@ namespace EnmityHp
                 | ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoMouseInputs | ImGuiWindowFlags.NoNavFocus
                 | ImGuiWindowFlags.AlwaysUseWindowPadding | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoSavedSettings);
             ImGui.SetWindowFontScale(Cfg.Size);
+            if (Cfg.Color != null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, Cfg.Color.Value);
+            }
             ImGui.TextUnformatted(str);
+            if (Cfg.Color != null)
+            {
+                ImGui.PopStyleColor();
+            }
             ImGui.End();
+            if (Cfg.BGColor != null)
+            {
+                ImGui.PopStyleColor();
+            }
+            if (Cfg.Font != null)
+            {
+                ImGui.PopFont();
+            }
             ImGui.PopStyleVar(2);
         }
     }
