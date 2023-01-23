@@ -5,6 +5,7 @@ using Dalamud.Interface;
 using Dalamud.Interface.Internal.Notifications;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using ECommons.ImGuiMethods;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
 using System;
@@ -48,6 +49,11 @@ namespace EnmityHp
                     ImGui.DragInt("Y offset", ref Cfg.OffsetY, 0.5f);
                     ImGui.SetNextItemWidth(100f);
                     ImGui.DragFloat("Scale", ref Cfg.Size, 0.001f);
+
+                    Util.ImGuiLineCentered("donate", delegate
+                    {
+                        KoFiButton.DrawButton();
+                    });
                 }
                 ImGui.End();
                 if (!CfgOpen)
