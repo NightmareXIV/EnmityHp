@@ -18,6 +18,7 @@ using Dalamud.Game.Network;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.IoC;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 
 namespace EnmityHp
 {
@@ -27,15 +28,15 @@ namespace EnmityHp
 		//[PluginService] static internal BuddyList Buddies { get; private set; }
 		//[PluginService] static internal ChatGui Chat { get; private set; }
 		//[PluginService] static internal ChatHandlers ChatHandlers { get; private set; }
-		[PluginService] static internal ClientState ClientState { get; private set; }
+		[PluginService] static internal IClientState ClientState { get; private set; }
 		//[PluginService] static internal CommandManager Commands { get; private set; }
-		[PluginService] static internal Condition Condition { get; private set; }
+		[PluginService] static internal ICondition Condition { get; private set; }
 		//[PluginService] static internal DataManager Data { get; private set; }
 		//[PluginService] static internal FateTable Fates { get; private set; }
 		/*[PluginService] static internal FlyTextGui FlyText { get; private set; }*/
-		[PluginService] static internal Framework Framework { get; private set; }
+		[PluginService] static internal IFramework Framework { get; private set; }
 		
-		[PluginService] static internal GameGui GameGui { get; private set; }
+		[PluginService] static internal IGameGui GameGui { get; private set; }
 		/*
 		[PluginService] static internal GameNetwork GameNetwork { get; private set; }
 		[PluginService] static internal JobGauges Gauges { get; private set; }
