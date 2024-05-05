@@ -138,7 +138,7 @@ namespace EnmityHp
                 }
                 catch (Exception e)
                 {
-                    PluginLog.Error(e.Message + "\n" + e.StackTrace);
+                    Svc.Log.Error(e.Message + "\n" + e.StackTrace);
                 }
             }
         }

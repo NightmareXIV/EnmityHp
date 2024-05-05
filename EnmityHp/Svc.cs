@@ -49,5 +49,6 @@ namespace EnmityHp
 		[PluginService] static internal SigScanner SigScanner { get; private set; }
 		[PluginService] static internal TargetManager Targets { get; private set; }
 		[PluginService] static internal ToastGui Toasts { get; private set; }*/
+    [PluginService] public static IPluginLog Log { get; private set; }
 	}
 }
