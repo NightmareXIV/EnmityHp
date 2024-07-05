@@ -1,5 +1,6 @@
 ﻿using Dalamud.Configuration;
 using Dalamud.Interface.GameFonts;
+using ECommons.ImGuiMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,9 @@ namespace EnmityHp
         public Vector4? Color = null;
         public Vector4? BGColor = null;
         public bool UseCustomFont = false;
+        public float FrameBorder = 0f;
+        public Vector4 FrameBorderColor = EColor.Red;
+        public float PaddingX = 2f;
+        public float PaddingY = 0f;
     }
 }

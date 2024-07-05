@@ -57,7 +57,10 @@ namespace EnmityHp
                     Util.NullColorEdit(ref Config.Color, "Customize text color", ImGuiCol.Text);
                     Util.NullColorEdit(ref Config.BGColor, "Customize background color", ImGuiCol.WindowBg);
 
-                    ImGui.Checkbox($"Use custom font", ref Config.UseCustomFont);
+                    if(ImGui.Checkbox($"Use custom font", ref Config.UseCustomFont))
+                    {
+                        if (Config.UseCustomFont) Service.FontManager.RebuildHandle();
+                    }    
                     if (Config.UseCustomFont)
                     {
                         ImGui.Indent();
@@ -68,6 +71,20 @@ namespace EnmityHp
                         }
                         ImGui.Unindent();
                     }
+
+                    ImGui.SetNextItemWidth(100f);
+                    ImGuiEx.SliderFloat("Overlay border", ref Config.FrameBorder, 0f, 5f);
+                    if(Config.FrameBorder > 0f)
+                    {
+                        ImGui.SameLine();
+                        ImGui.ColorEdit4("##colfb", ref Config.FrameBorderColor, ImGuiColorEditFlags.NoInputs);
+                    }
+                    ImGui.SetNextItemWidth(100f);
+                    ImGuiEx.SliderFloat("Horizontal padding##x", ref Config.PaddingX, 0f, 10f);
+                    ImGui.SetNextItemWidth(100f);
+                    ImGuiEx.SliderFloat("Vertical padding##x", ref Config.PaddingY, 0f, 10f);
+
+                    ImGui.NewLine();
 
                     Util.ImGuiLineCentered("donate", PatreonBanner.DrawRaw);
                 }
@@ -130,8 +147,10 @@ namespace EnmityHp
                 ImGuiHelpers.ForceNextWindowMainViewport();
                 var textSize = ImGui.CalcTextSize(str) * Config.Size;
                 ImGuiHelpers.SetNextWindowPosRelativeMainViewport(new Vector2(x - (Config.IsLeftAligned ? 0 : textSize.X) + Config.OffsetX, y - textSize.Y / 2f + Config.OffsetY));
-                ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(2f, 0f));
+                ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(Config.PaddingX, Config.PaddingY));
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowMinSize, new Vector2(0f, 0f));
+                ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, Config.FrameBorder);
+                ImGui.PushStyleColor(ImGuiCol.Border, Config.FrameBorderColor);
                 ImGui.Begin("##enmityhp" + y, ImGuiWindowFlags.NoInputs | ImGuiWindowFlags.NoScrollbar
                     | ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoMouseInputs | ImGuiWindowFlags.NoNavFocus
                     | ImGuiWindowFlags.AlwaysUseWindowPadding | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoSavedSettings
@@ -151,6 +170,7 @@ namespace EnmityHp
                 {
                     ImGui.PopStyleColor();
                 }
+                ImGui.PopStyleColor();
             }
             catch(Exception e)
             {
@@ -160,7 +180,7 @@ namespace EnmityHp
             {
                 Service.FontManager.PopFont();
             }
-            ImGui.PopStyleVar(2);
+            ImGui.PopStyleVar(3);
         }
     }
 }
