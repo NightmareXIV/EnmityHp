@@ -20,6 +20,6 @@ namespace EnmityHp
         public float Size = 1f;
         public Vector4? Color = null;
         public Vector4? BGColor = null;
-        public GameFontFamilyAndSize? Font = null;
+        public bool UseCustomFont = false;
     }
 }
