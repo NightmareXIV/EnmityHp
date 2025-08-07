@@ -31,10 +31,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="DalamudPackager" Version="13.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ECommons\ECommons\ECommons.csproj" />
+	  <PackageReference Include="ECommons" Version="3.0.0.18-api13" />
 	</ItemGroup>
 
 	<ItemGroup>
