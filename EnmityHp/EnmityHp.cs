@@ -9,7 +9,7 @@ using ECommons.DalamudServices;
 using ECommons.Funding;
 using ECommons.Singletons;
 using FFXIVClientStructs.FFXIV.Component.GUI;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using System;
 using System.Numerics;
 using ECommons.DalamudServices.Legacy;
@@ -102,7 +102,7 @@ namespace EnmityHp
                     var enlist = Svc.GameGui.GetAddonByName("_EnemyList", 1);
                     if (enlist != IntPtr.Zero)
                     {
-                        var enlistAtk = (AtkUnitBase*)enlist;
+                        var enlistAtk = (AtkUnitBase*)enlist.Address;
                         if (enlistAtk->UldManager.NodeListCount < 12) return;
                         var baseX = enlistAtk->X;
                         var baseY = enlistAtk->Y;
